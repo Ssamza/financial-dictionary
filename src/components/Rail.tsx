@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { Metric } from "../data/metrics";
+import { MODULE_EN, type Metric } from "../data/metrics";
 
 interface RailProps {
   metrics: Metric[];
@@ -24,7 +24,10 @@ export default function Rail({ metrics, activeSec, open, onSelectSec }: RailProp
       <div>
         {Object.entries(groups).map(([cat, secs]) => (
           <div className="railgrp" key={cat}>
-            <h3>{cat}</h3>
+            <h3>
+              {cat}
+              {MODULE_EN[cat] ? ` (${MODULE_EN[cat]})` : ""}
+            </h3>
             {Object.entries(secs).map(([sec, n]) => (
               <button
                 key={sec}

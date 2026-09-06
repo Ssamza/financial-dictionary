@@ -21,6 +21,13 @@ export const CATS: Record<string, string> = {
   ratios: "Ratios",
 };
 
+export const MODULE_EN: Record<string, string> = {
+  "Estado de resultados": "Income Statement",
+  "Balance general": "Balance Sheet",
+  "Flujo de efectivo": "Cash Flow Statement",
+  "Ratios y valuación": "Ratios & Valuation",
+};
+
 export const metrics: Metric[] = [
   {
     "id": "totalrevenues",
