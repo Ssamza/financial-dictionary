@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { Metric } from "../../data/metrics";
+import { metrics, type Metric } from "../../data/metrics";
 import { pad } from "../../lib/search";
 import Gauge from "../Gauge";
+import RuleOf20Calculator from "../RuleOf20Calculator";
 
 interface ReaderViewProps {
   metric: Metric;
@@ -34,6 +35,7 @@ export default function ReaderView({
   const prev = index > 0 ? seq[index - 1] : undefined;
   const next = index >= 0 && index < seq.length - 1 ? seq[index + 1] : undefined;
   const rel = useMemo(() => metric.rel.map((id) => byId[id]).filter(Boolean), [metric.rel, byId]);
+  const htmlContent = useMemo(() => ({ __html: metric.html }), [metric.html]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -71,7 +73,7 @@ export default function ReaderView({
           <button onClick={() => onSelectSec(metric.sec)}>{metric.sec}</button>
         </div>
         <header className="dhead">
-          <span className="fol">Ficha {pad(metric.num)} / 199</span>
+          <span className="fol">Ficha {pad(metric.num)} / {metrics.length}</span>
           <h1>{metric.disp}</h1>
           <div className="dsub">
             <span className="badge on">
@@ -83,12 +85,19 @@ export default function ReaderView({
             </button>
           </div>
         </header>
-        <div
-          className="body"
-          ref={bodyRef}
-          onClick={handleBodyClick}
-          dangerouslySetInnerHTML={{ __html: metric.html }}
-        />
+        <div className="body" ref={bodyRef} onClick={handleBodyClick}>
+          {metric.id === "ruleof20" && (
+            <>
+              <h4>Calculadora rápida</h4>
+              <p>
+                Ingresa el P/E trailing del S&amp;P 500 (por ejemplo, desde multpl.com) y el CPI
+                interanual de EE.UU. (desde bls.gov) para ver la suma y en qué zona estás.
+              </p>
+              <RuleOf20Calculator />
+            </>
+          )}
+          <div dangerouslySetInnerHTML={htmlContent} />
+        </div>
         <nav className="pager">
           <button disabled={!prev} onClick={() => prev && onOpen(prev.id)}>
             <u>← Anterior</u>

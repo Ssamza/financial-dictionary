@@ -165,7 +165,7 @@ function App() {
   let countLabel: string;
   if (filters.view === "read" && currentMetric) {
     filterLabel = String(currentMetric.num).padStart(3, "0");
-    countLabel = `FICHA ${String(currentMetric.num).padStart(3, "0")} / 199`;
+    countLabel = `FICHA ${String(currentMetric.num).padStart(3, "0")} / ${metrics.length}`;
   } else if (filters.view === "formulas") {
     const n = metrics.filter((m) => m.formula).length;
     filterLabel = filterLabelBase.toUpperCase();

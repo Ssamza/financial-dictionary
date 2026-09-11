@@ -22,25 +22,27 @@ export default function Rail({ metrics, activeSec, open, onSelectSec }: RailProp
     <nav className={`rail${open ? " on" : ""}`}>
       <div className="railhd lbl">Índice general</div>
       <div>
-        {Object.entries(groups).map(([cat, secs]) => (
-          <div className="railgrp" key={cat}>
-            <h3>
-              {cat}
-              {MODULE_EN[cat] ? ` (${MODULE_EN[cat]})` : ""}
-            </h3>
-            {Object.entries(secs).map(([sec, n]) => (
-              <button
-                key={sec}
-                className="rit"
-                aria-current={activeSec === sec}
-                onClick={() => onSelectSec(sec)}
-              >
-                <i>{sec}</i>
-                <u>{n}</u>
-              </button>
-            ))}
-          </div>
-        ))}
+        {Object.entries(groups)
+          .sort(([a], [b]) => (a === "Ciclos" ? -1 : b === "Ciclos" ? 1 : 0))
+          .map(([cat, secs]) => (
+            <div className="railgrp" key={cat}>
+              <h3>
+                {cat}
+                {MODULE_EN[cat] ? ` (${MODULE_EN[cat]})` : ""}
+              </h3>
+              {Object.entries(secs).map(([sec, n]) => (
+                <button
+                  key={sec}
+                  className="rit"
+                  aria-current={activeSec === sec}
+                  onClick={() => onSelectSec(sec)}
+                >
+                  <i>{sec}</i>
+                  <u>{n}</u>
+                </button>
+              ))}
+            </div>
+          ))}
       </div>
     </nav>
   );

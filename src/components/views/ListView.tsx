@@ -42,6 +42,7 @@ export default function ListView({
   onTogglePin,
 }: ListViewProps) {
   const hero = !q && cat === "all" && !sec && !stars && !pinned;
+  const secCount = new Set(metrics.map((m) => m.sec)).size;
   const groups: Record<string, Metric[]> = {};
   pool.forEach((m) => {
     (groups[m.sec] = groups[m.sec] || []).push(m);
@@ -57,16 +58,16 @@ export default function ListView({
             Cada línea de un estado financiero, <em>descifrada</em>
           </h1>
           <p>
-            Ciento noventa y nueve métricas de los tres estados financieros y los ratios que se
+            {metrics.length} métricas de los tres estados financieros y los ratios que se
             construyen sobre ellos: qué mide cada una, cómo se lee y dónde están las trampas.
           </p>
           <div className="stat">
             <div>
-              <b>199</b>
+              <b>{metrics.length}</b>
               <span className="lbl">Fichas</span>
             </div>
             <div>
-              <b>25</b>
+              <b>{secCount}</b>
               <span className="lbl">Secciones</span>
             </div>
             <div>
