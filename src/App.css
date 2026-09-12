@@ -136,7 +136,7 @@ mark{background:var(--amber);color:#06090A;padding:0 1px}
 
 /* ═════ lector ═════ */
 .reader{display:flex;align-items:flex-start}
-.doc{flex:1;min-width:0;padding:0 26px 70px;max-width:120ch}
+.doc{flex:1;min-width:0;padding:0 26px 70px}
 .side{position:sticky;top:calc(var(--top) + 0px);width:216px;flex:none;margin-left:auto;
   height:calc(100vh - var(--top) - var(--bot));overflow-y:auto;
   border-left:1px solid var(--line);background:var(--panel);padding-bottom:26px}
