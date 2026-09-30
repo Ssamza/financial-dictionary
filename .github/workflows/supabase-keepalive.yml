@@ -1,0 +1,20 @@
+name: Supabase keep-alive
+
+on:
+  schedule:
+    - cron: "0 12 */3 * *"   # every 3 days at 12:00 UTC
+  workflow_dispatch:           # manual trigger for testing
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SELECT valuations (keep-alive)
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/valuations?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}")
+
+          echo "HTTP $STATUS"
+          [ "$STATUS" = "200" ] || exit 1
