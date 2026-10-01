@@ -190,6 +190,8 @@ mark{background:var(--amber);color:#06090A;padding:0 1px}
 .body .tbl li:last-child{border-right:0}
 .xref{color:var(--cyan);text-decoration:none;border-bottom:1px dotted var(--cyan);cursor:pointer}
 .xref:hover{background:var(--cyan);color:#06090A;border-bottom-color:transparent}
+.xref:disabled{color:var(--txt3);border-bottom-color:var(--txt3);cursor:not-allowed}
+.xref:disabled:hover{background:none;color:var(--txt3);border-bottom-color:var(--txt3)}
 .sbox{border-bottom:1px solid var(--line);padding:14px 15px}
 .sbox h6{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--txt3);font-weight:500;margin-bottom:9px}

@@ -87,14 +87,13 @@ export default function ValuationView() {
     setConfirmOpen(false);
   }
 
+  const numbersComplete = [price, ...scenarios.flatMap((s) => [s.eps, s.per])].every(
+    (v) => v.trim() !== "" && parseFloat(v) !== 0,
+  );
+
   async function handleSave() {
     if (!ticker.trim()) {
-      setStatus("Poné un ticker antes de guardar.");
-      return;
-    }
-    const values = [price, ...scenarios.flatMap((s) => [s.eps, s.per])];
-    if (values.some((v) => parseFloat(v) === 0 || v.trim() === "")) {
-      setStatus("Completá todos los valores (ninguno puede quedar vacío o en 0).");
+      setStatus("Ingresa un ticker para guardar");
       return;
     }
     const payload = { id: activeId ?? crypto.randomUUID(), ticker: ticker.trim(), price, scenarios };
@@ -189,7 +188,7 @@ export default function ValuationView() {
 
         {hasBackend && (
           <p style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <button className="xref" onClick={handleSave}>
+            <button className="xref" onClick={handleSave} disabled={!numbersComplete}>
               {activeId ? "Actualizar" : "Guardar"}
             </button>
             {activeId && (
