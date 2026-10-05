@@ -24,7 +24,15 @@ export async function fetchValuations(): Promise<SavedValuation[]> {
     .select("id, ticker, price, scenarios, updated_at")
     .order("updated_at", { ascending: false });
   if (error) throw error;
-  return (data ?? []) as SavedValuation[];
+  return (data ?? []).map((row) => ({
+    ...row,
+    price: row.price == null ? "" : String(row.price),
+    scenarios: (row.scenarios as Scenario[]).map((s) => ({
+      ...s,
+      eps: s.eps == null ? "" : String(s.eps),
+      per: s.per == null ? "" : String(s.per),
+    })),
+  })) as SavedValuation[];
 }
 
 export async function insertValuation(v: Omit<SavedValuation, "updated_at">): Promise<void> {
